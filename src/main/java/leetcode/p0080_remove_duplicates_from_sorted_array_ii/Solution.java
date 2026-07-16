@@ -1,26 +1,37 @@
 package leetcode.p0080_remove_duplicates_from_sorted_array_ii;
 
+import java.util.Arrays;
+
 public class Solution {
+
     public int removeDuplicates(int[] nums) {
-        int slow = -1;
-        int duplicated = 1;
-        for (int quick = 1; quick < nums.length; quick++) {
-            if (nums[quick] == nums[quick - 1]) {
-                duplicated++;
+        int remaining = nums.length;
+        int count = 1;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] == nums[i - 1]) {
+                count++;
 
-                if (duplicated == 2) {
-                    nums[slow + 1] = nums[quick - 1];
-                    nums[slow + 2] = nums[quick];
+                if (count > 2) {
+                    while(nums[i] == nums[i - 1] && i < remaining) {
+                        move(nums, i + 1);
+                        remaining--;
+                    }
 
-                    slow += 2;
+                    count = 1;
                 }
             } else {
-                nums[slow + 1] = nums[quick];
-                slow++;
-                duplicated = 1;
+                count = 1;
             }
         }
 
-        return slow;
+        System.out.printf("result -> nums: %s, remaining: %s%n", Arrays.toString(nums), remaining);
+        return remaining;
+    }
+
+    public void move(int[] nums, int startPoint) {
+        System.out.printf("moving nums: %s, start point: %s%n", Arrays.toString(nums), startPoint);
+        for (int i = startPoint; i < nums.length; i++) {
+            nums[i - 1] = nums[i];
+        }
     }
 }
