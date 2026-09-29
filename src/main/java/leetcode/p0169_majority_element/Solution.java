@@ -1,29 +1,24 @@
 package leetcode.p0169_majority_element;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 public class Solution {
     public int majorityElement(int[] nums) {
-        Map<Integer, Integer> counts = new HashMap<>();
-        for (int num : nums) {
-            if (counts.containsKey(num)) {
-                counts.compute(num, (k, count) -> count + 1);
+        int candidate = 0;
+        int count = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (count == 0) {
+                candidate = nums[i];
+                count = 1;
+                continue;
+            }
+
+            if (nums[i] == candidate) {
+                count++;
             } else {
-                counts.put(num, 1);
+                count--;
             }
         }
 
-        int requiredTimes = Math.ceilDiv(nums.length, 2);
-        Set<Integer> countsKey = counts.keySet();
-        for (Integer key : countsKey) {
-            Integer count = counts.get(key);
-            if (count >= requiredTimes) {
-                return key;
-            }
-        }
-
-        return -1;
+        return candidate;
     }
 }
