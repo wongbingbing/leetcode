@@ -2,11 +2,23 @@ package leetcode.p0189_rotate_array;
 
 public class Solution {
     public void rotate(int[] nums, int k) {
-        int[] rotated_nums = new int[nums.length];
-        for (int i = 0; i < nums.length; i++) {
-            rotated_nums[(i + k) % rotated_nums.length] = nums[i];
+
+        k = k % nums.length;
+        reverse(nums, 0, nums.length - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, nums.length - 1);
+    }
+
+    private void reverse(int[] nums, int start, int end) {
+        if(start >= end) {
+            return;
         }
 
-        System.arraycopy(rotated_nums, 0, nums, 0, nums.length);
+        int stopPoint = (end - start) / 2;
+        for (int i = 0; i <= stopPoint; i++) {
+            int element = nums[end - i];
+            nums[end - i] = nums[start + i];
+            nums[start + i] = element;
+        }
     }
 }

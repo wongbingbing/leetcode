@@ -32,4 +32,18 @@ class SolutionTest {
         solution.rotate(nums, 2);
         assertEquals(List.of(3, 99, -1, -100), toList(nums));
     }
+
+    @Test
+    void singleElement() {
+        int[] nums = {1};
+        solution.rotate(nums, 1);
+        assertEquals(List.of(1), toList(nums));
+    }
+
+    @Test
+    void kLargerThanLength() {
+        int[] nums = {1};
+        solution.rotate(nums, 100000);
+        assertEquals(List.of(1), toList(nums));
+    }
 }
